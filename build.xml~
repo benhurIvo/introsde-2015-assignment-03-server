@@ -117,7 +117,7 @@
             </java>
         </target>
 <target name="execute.client">
-            <echo message="execute client final1/endpoint.PeoplePublisher in ${build.dir}" />
+            <echo message="execute client introsde.document.endpoint.PeoplePublisher in ${build.dir}" />
             <java classname="introsde.document.client.PeopleClient" classpath="${build.dir}" fork="true">
                 <arg value="$JAVA_OPTS  -cp" />
                 <classpath>

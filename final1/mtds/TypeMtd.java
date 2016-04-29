@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package introsde.assignment.soap.dao.mtds;
+package final1.mtds;
 
-import introsde.assignment.soap.dao.Life;
-import introsde.assignment.soap.model.Type;
-import introsde.assignment.soap.utils.MeasureTyp;
+
+import final1.dao.Life;
+import final1.domain.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -73,17 +73,17 @@ public class TypeMtd {
     }
     
          
-      public static List<MeasureTyp> getMeasuretypes() {
-         EntityManager em = Life.instance.createEntityManager();
-        List<Type> Tlist = em.createNamedQuery("Type.findAll", Type.class)
-		.getResultList();
-	Life.instance.closeConnections(em);
-	List<MeasureTyp> mt = new ArrayList<MeasureTyp>();
-	for(Type t:Tlist){
-	MeasureTyp mtt = new MeasureTyp();
-	mtt.setValue(t.getType());
-	mt.add(mtt);
-	}
-        return mt;
-    }
+//      public static List<MeasureTyp> getMeasuretypes() {
+//         EntityManager em = Life.instance.createEntityManager();
+//        List<Type> Tlist = em.createNamedQuery("Type.findAll", Type.class)
+//		.getResultList();
+//	Life.instance.closeConnections(em);
+//	List<MeasureTyp> mt = new ArrayList<MeasureTyp>();
+//	for(Type t:Tlist){
+//	MeasureTyp mtt = new MeasureTyp();
+//	mtt.setValue(t.getType());
+//	mt.add(mtt);
+//	}
+//        return mt;
+//    }
 }
