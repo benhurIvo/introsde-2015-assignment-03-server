@@ -1,4 +1,4 @@
-package final1.dao;
+package introsde.assignment.soap.dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +13,7 @@ public enum Life {
         if (emf!=null) {
             emf.close();
         }
-        emf = Persistence.createEntityManagerFactory("final1PU");
+        emf = Persistence.createEntityManagerFactory("introsde-jpa");
     }
 
     public EntityManager createEntityManager() {

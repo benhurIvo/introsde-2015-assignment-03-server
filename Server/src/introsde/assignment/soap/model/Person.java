@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package final1.domain;
+package introsde.assignment.soap.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,14 +29,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "person")
-@XmlRootElement
+//@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
     @NamedQuery(name = "Person.findByPid", query = "SELECT p FROM Person p WHERE p.pid = :pid"),
     @NamedQuery(name = "Person.findByFirstname", query = "SELECT p FROM Person p WHERE p.firstname = :firstname"),
     @NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastname = :lastname"),
-    @NamedQuery(name = "Person.findByBirthdate", query = "SELECT p FROM Person p WHERE p.birthdate = :birthdate"),
-    @NamedQuery(name = "Person.findByUsertype", query = "SELECT p FROM Person p WHERE p.usertype = :usertype")})
+    @NamedQuery(name = "Person.findByBirthdate", query = "SELECT p FROM Person p WHERE p.birthdate = :birthdate")})
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,23 +58,8 @@ public class Person implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "birthdate")
     private String birthdate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "usertype")
-    private String usertype;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "uname")
-    private String uname;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "password")
-    private String password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pid")
+    private Collection<Helthprofile> healthprofileCollection;
 
     public Person() {
     }
@@ -81,14 +68,11 @@ public class Person implements Serializable {
 	this.pid = pid;
     }
 
-    public Person(Integer pid, String firstname, String lastname, String birthdate, String usertype, String uname, String password) {
+    public Person(Integer pid, String firstname, String lastname, String birthdate) {
 	this.pid = pid;
 	this.firstname = firstname;
 	this.lastname = lastname;
 	this.birthdate = birthdate;
-	this.usertype = usertype;
-	this.uname = uname;
-	this.password = password;
     }
 
     public Integer getPid() {
@@ -123,28 +107,13 @@ public class Person implements Serializable {
 	this.birthdate = birthdate;
     }
 
-    public String getUsertype() {
-	return usertype;
+//    @XmlTransient
+    public Collection<Helthprofile> getHealthprofileCollection() {
+	return healthprofileCollection;
     }
 
-    public void setUsertype(String usertype) {
-	this.usertype = usertype;
-    }
-
-    public String getUname() {
-	return uname;
-    }
-
-    public void setUname(String uname) {
-	this.uname = uname;
-    }
-
-    public String getPassword() {
-	return password;
-    }
-
-    public void setPassword(String password) {
-	this.password = password;
+    public void setHealthprofileCollection(Collection<Helthprofile> healthprofileCollection) {
+	this.healthprofileCollection = healthprofileCollection;
     }
 
     @Override
@@ -169,7 +138,7 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-	return "final1.domain.Person[ pid=" + pid + " ]";
+	return "ehealth.model.Person[ pid=" + pid + " ]";
     }
     
 }

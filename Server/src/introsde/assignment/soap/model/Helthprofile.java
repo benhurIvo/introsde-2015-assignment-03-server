@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package final1.domain;
+package introsde.assignment.soap.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -17,8 +17,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,15 +28,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "healthprofile")
-@XmlRootElement
+//@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Healthprofile.findAll", query = "SELECT h FROM Healthprofile h"),
-    @NamedQuery(name = "Healthprofile.findByHid", query = "SELECT h FROM Healthprofile h WHERE h.hid = :hid"),
-    @NamedQuery(name = "Healthprofile.findByPidTid", query = "SELECT h FROM Healthprofile h WHERE h.pid.pid = :pid and h.tid.tid = :tid"),
-    @NamedQuery(name = "Healthprofile.findByPidHid", query = "SELECT h FROM Healthprofile h WHERE h.pid.pid = :pid and h.hid = :hid"),
-    @NamedQuery(name = "Healthprofile.findByDateRange", query = "SELECT h FROM Healthprofile h WHERE h.pid.pid = :pid and h.datecreated between :d1 and :d2"),
-    @NamedQuery(name = "Healthprofile.findByPid", query = "SELECT h FROM Healthprofile h WHERE h.pid.pid = :pid")})
-public class Healthprofile implements Serializable {
+    @NamedQuery(name = "Healthprofile.findAll", query = "SELECT h FROM Helthprofile h"),
+    @NamedQuery(name = "Healthprofile.findByHid", query = "SELECT h FROM Helthprofile h WHERE h.hid = :hid"),
+    @NamedQuery(name = "Healthprofile.findByPidTid", query = "SELECT h FROM Helthprofile h WHERE h.pid.pid = :pid and h.tid.tid = :tid"),
+    @NamedQuery(name = "Healthprofile.findByPidHid", query = "SELECT h FROM Helthprofile h WHERE h.pid.pid = :pid and h.hid = :hid"),
+    @NamedQuery(name = "Healthprofile.findByDateRange", query = "SELECT h FROM Helthprofile h WHERE h.pid.pid = :pid and h.datecreated between :d1 and :d2"),
+    @NamedQuery(name = "Healthprofile.findByPid", query = "SELECT h FROM Helthprofile h WHERE h.pid.pid = :pid")})
+public class Helthprofile implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,28 +44,32 @@ public class Healthprofile implements Serializable {
     @Column(name = "hid")
     private Integer hid;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "value")
     private String value;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "datecreated")
     private String datecreated;
     @JoinColumn(name = "tid", referencedColumnName = "tid")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Type tid;
     @JoinColumn(name = "pid", referencedColumnName = "pid")
-    @ManyToOne(optional = false)
+    //@ManyToOne(optional = false)
     private Person pid;
 
-    public Healthprofile() {
+    public Helthprofile() {
     }
 
-    public Healthprofile(Integer hid) {
+    public Helthprofile(Integer hid) {
 	this.hid = hid;
     }
 
-    public Healthprofile(Integer hid, String value, String datecreated) {
+    public Helthprofile(Integer hid, String value, String datecreated) {
 	this.hid = hid;
 	this.value = value;
 	this.datecreated = datecreated;
@@ -120,10 +125,10 @@ public class Healthprofile implements Serializable {
     @Override
     public boolean equals(Object object) {
 	// TODO: Warning - this method won't work in the case the id fields are not set
-	if (!(object instanceof Healthprofile)) {
+	if (!(object instanceof Helthprofile)) {
 	    return false;
 	}
-	Healthprofile other = (Healthprofile) object;
+	Helthprofile other = (Helthprofile) object;
 	if ((this.hid == null && other.hid != null) || (this.hid != null && !this.hid.equals(other.hid))) {
 	    return false;
 	}
@@ -132,7 +137,7 @@ public class Healthprofile implements Serializable {
 
     @Override
     public String toString() {
-	return "final1.domain.Healthprofile[ hid=" + hid + " ]";
+	return "ehealth.model.Healthprofile[ hid=" + hid + " ]";
     }
     
 }

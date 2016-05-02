@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package final1.domain;
+package introsde.assignment.soap.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,29 +27,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "type")
-@XmlRootElement
+//@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t"),
     @NamedQuery(name = "Type.findByTid", query = "SELECT t FROM Type t WHERE t.tid = :tid"),
-    @NamedQuery(name = "Type.findByType", query = "SELECT t FROM Type t WHERE t.type = :type"),
-    @NamedQuery(name = "Type.findByMeasure", query = "SELECT t FROM Type t WHERE t.measure = :measure")})
+    @NamedQuery(name = "Type.findByType", query = "SELECT t FROM Type t WHERE t.type = :type")})
 public class Type implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "tid")
     private Integer tid;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "type")
     private String type;
-    @Basic(optional = false)
-    @Column(name = "measure")
-    private String measure;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "tid")
-    private Healthprofile healthprofile;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "tid")
-    private Goal goal;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tid")
+    private Collection<Helthprofile> healthprofileCollection;
 
     public Type() {
     }
@@ -56,10 +54,9 @@ public class Type implements Serializable {
 	this.tid = tid;
     }
 
-    public Type(Integer tid, String type, String measure) {
+    public Type(Integer tid, String type) {
 	this.tid = tid;
 	this.type = type;
-	this.measure = measure;
     }
 
     public Integer getTid() {
@@ -78,28 +75,13 @@ public class Type implements Serializable {
 	this.type = type;
     }
 
-    public String getMeasure() {
-	return measure;
+//    @XmlTransient
+    public Collection<Helthprofile> getHealthprofileCollection() {
+	return healthprofileCollection;
     }
 
-    public void setMeasure(String measure) {
-	this.measure = measure;
-    }
-
-    public Healthprofile getHealthprofile() {
-	return healthprofile;
-    }
-
-    public void setHealthprofile(Healthprofile healthprofile) {
-	this.healthprofile = healthprofile;
-    }
-
-    public Goal getGoal() {
-	return goal;
-    }
-
-    public void setGoal(Goal goal) {
-	this.goal = goal;
+    public void setHealthprofileCollection(Collection<Helthprofile> healthprofileCollection) {
+	this.healthprofileCollection = healthprofileCollection;
     }
 
     @Override
@@ -124,7 +106,7 @@ public class Type implements Serializable {
 
     @Override
     public String toString() {
-	return "final1.domain.Type[ tid=" + tid + " ]";
+	return "ehealth.model.Type[ tid=" + tid + " ]";
     }
     
 }

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package final1.mtds;
+package introsde.assignment.soap.dao.mtds;
 
-import final1.dao.Life;
-import final1.domain.*;
+import introsde.assignment.soap.dao.Life;
+import introsde.assignment.soap.model.Helthprofile;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -16,22 +16,22 @@ import javax.persistence.EntityTransaction;
  * @author benhur
  */
 public class HealthMtd {
-      public static Healthprofile getHealthById(int hid) {
+       public static Helthprofile getHealthById(int hid) {
         EntityManager em = Life.instance.createEntityManager();
-        Healthprofile h = em.find(Healthprofile.class, hid);
+        Helthprofile h = em.find(Helthprofile.class, hid);
         Life.instance.closeConnections(em);
         return h;
     }
 
-    public static List<Healthprofile> getAll() {
+    public static List<Helthprofile> getAll() {
         EntityManager em = Life.instance.createEntityManager();
-        List<Healthprofile> list = em.createNamedQuery("Health.findAll", Healthprofile.class)
+        List<Helthprofile> list = em.createNamedQuery("Health.findAll", Helthprofile.class)
             .getResultList();
         Life.instance.closeConnections(em);
         return list;
     }
 
-    public static Healthprofile saveHealthprofile(Healthprofile h) {
+    public static Helthprofile saveHealthprofile(Helthprofile h) {
         EntityManager em = Life.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -41,7 +41,7 @@ public class HealthMtd {
         return h;
     } 
 
-    public static Healthprofile updateHealth(Healthprofile h) {
+    public static Helthprofile updateHealth(Helthprofile h) {
         EntityManager em = Life.instance.createEntityManager(); 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -51,9 +51,9 @@ public class HealthMtd {
         return h;
     }
 
-    public static List<Healthprofile> getByPidHid(int hid,int pid) {
+    public static List<Helthprofile> getByPidHid(int hid,int pid) {
      EntityManager em = Life.instance.createEntityManager(); 
-         List<Healthprofile> list = em.createNamedQuery("Healthprofile.findByPidHid", Healthprofile.class)
+         List<Helthprofile> list = em.createNamedQuery("Healthprofile.findByPidHid", Helthprofile.class)
 		.setParameter("pid", pid)
 		.setParameter("hid", hid)
 		.getResultList();
@@ -61,17 +61,7 @@ public class HealthMtd {
 	return list;
     }
     
-    public static List<Healthprofile> getByPidTid(int pid,int tid) {
-     EntityManager em = Life.instance.createEntityManager(); 
-         List<Healthprofile> list = em.createNamedQuery("Healthprofile.findByPidTid", Healthprofile.class)
-		.setParameter("pid", pid)
-		.setParameter("tid", tid)
-		.getResultList();
-        Life.instance.closeConnections(em);
-	return list;
-    }
-    
-    public static void removeHealth(Healthprofile h) {
+    public static void removeHealth(Helthprofile h) {
         EntityManager em = Life.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
